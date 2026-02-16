@@ -80,7 +80,24 @@ export default function RootLayout({
     isOpen = !isOpen;
     iframe.classList.toggle('open', isOpen);
     trigger.classList.toggle('open', isOpen);
-    if (isOpen) badge.style.display = 'none';
+    if (isOpen) {
+      badge.style.display = 'none';
+      if (window.innerWidth <= 480) {
+        trigger.style.display = 'none';
+      }
+    } else {
+      if (window.innerWidth <= 480) {
+        trigger.style.display = 'flex';
+      }
+    }
+  });
+  window.addEventListener('message', function(e) {
+    if (e.data === 'close-ps-chat') {
+      isOpen = false;
+      iframe.classList.remove('open');
+      trigger.classList.remove('open');
+      trigger.style.display = 'flex';
+    }
   });
   setTimeout(function() { if (!isOpen) badge.style.display = 'none'; }, 8000);
 })();

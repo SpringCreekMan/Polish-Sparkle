@@ -74,6 +74,25 @@
     animation: sparkle-float 3s ease-in-out infinite;
   }
 
+  .chat-close-btn {
+    display: none;
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255,255,255,0.2);
+    border: 1px solid rgba(255,255,255,0.3);
+    color: #fff;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+  }
+
   @keyframes sparkle-float {
     0%, 100% { transform: translateY(-50%) rotate(0deg); }
     50% { transform: translateY(-60%) rotate(10deg); }
@@ -384,6 +403,11 @@
       border-radius: 0;
     }
   }
+
+  @media (max-width: 480px) {
+    .chat-close-btn { display: flex; }
+    .chat-header::after { display: none; }
+  }
 </style>
 </head>
 <body>
@@ -396,6 +420,7 @@
       <h1>Polish Sparkle</h1>
       <p><span class="status-dot"></span>Online — Get a free quote in minutes</p>
     </div>
+    <button class="chat-close-btn" id="chatCloseBtn" onclick="window.parent.postMessage('close-ps-chat','*')">✕</button>
   </div>
 
   <!-- Promo -->
