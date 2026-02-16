@@ -46,8 +46,8 @@ export default function RootLayout({
   var style = document.createElement('style');
   style.textContent = \`
     @import url('https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Playfair+Display:wght@700&display=swap');
-    #ps-chat-trigger{position:fixed;bottom:24px;right:24px;width:62px;height:62px;border-radius:50%;background:linear-gradient(135deg,#1B6B4A,#2A8F64);color:#fff;border:none;cursor:pointer;font-size:27px;box-shadow:0 4px 20px rgba(27,107,74,0.35);z-index:99999;transition:all 0.3s;display:flex;align-items:center;justify-content:center}
-    #ps-chat-trigger:hover{transform:scale(1.08);box-shadow:0 6px 28px rgba(27,107,74,0.45)}
+    #ps-chat-trigger{position:fixed;bottom:24px;right:24px;width:62px;height:62px;border-radius:50%;background:linear-gradient(135deg,#2B7DE0,#4A9AF5);color:#fff;border:none;cursor:pointer;font-size:27px;box-shadow:0 4px 20px rgba(43,125,224,0.35);z-index:99999;transition:all 0.3s;display:flex;align-items:center;justify-content:center}
+    #ps-chat-trigger:hover{transform:scale(1.08);box-shadow:0 6px 28px rgba(43,125,224,0.45)}
     #ps-chat-trigger.open span:first-child{display:none}#ps-chat-trigger.open span:last-child{display:block}
     #ps-chat-trigger span:last-child{display:none;font-size:22px}
     #ps-chat-badge{position:absolute;top:-4px;right:-4px;width:20px;height:20px;background:#D4A853;border-radius:50%;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;color:#fff;border:2px solid #fff;animation:ps-pop .4s cubic-bezier(.16,1,.3,1)}

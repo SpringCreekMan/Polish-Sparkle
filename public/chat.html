@@ -8,20 +8,20 @@
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --ps-primary: #1B6B4A;
-    --ps-primary-light: #2A8F64;
-    --ps-primary-pale: #E8F5EE;
-    --ps-accent: #D4A853;
+    --ps-primary: #2B7DE0;
+    --ps-primary-light: #4A9AF5;
+    --ps-primary-pale: #E8F1FC;
+    --ps-accent: #C8963E;
     --ps-accent-light: #F5ECD4;
-    --ps-bg: #FAFBF9;
+    --ps-bg: #F8FAFB;
     --ps-surface: #FFFFFF;
-    --ps-text: #1A2E23;
-    --ps-text-light: #5A6B60;
-    --ps-border: #D8E0DB;
-    --ps-sparkle: #D4A853;
+    --ps-text: #1A2533;
+    --ps-text-light: #5A6878;
+    --ps-border: #D8E0E8;
+    --ps-sparkle: #C8963E;
     --ps-radius: 16px;
-    --ps-shadow: 0 2px 12px rgba(27, 107, 74, 0.08);
-    --ps-shadow-lg: 0 8px 32px rgba(27, 107, 74, 0.12);
+    --ps-shadow: 0 2px 12px rgba(43, 125, 224, 0.08);
+    --ps-shadow-lg: 0 8px 32px rgba(43, 125, 224, 0.12);
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -112,7 +112,7 @@
     display: inline-block;
     width: 7px;
     height: 7px;
-    background: #6BDE8A;
+    background: #5CB8FF;
     border-radius: 50%;
     margin-right: 5px;
     animation: pulse-dot 2s infinite;
@@ -133,7 +133,7 @@
     gap: 16px;
     scroll-behavior: smooth;
     background:
-      radial-gradient(ellipse at 20% 80%, rgba(27,107,74,0.03) 0%, transparent 50%),
+      radial-gradient(ellipse at 20% 80%, rgba(43,125,224,0.03) 0%, transparent 50%),
       radial-gradient(ellipse at 80% 20%, rgba(212,168,83,0.04) 0%, transparent 50%),
       var(--ps-bg);
   }
@@ -196,7 +196,7 @@
     background: var(--ps-primary);
     color: #fff;
     border-radius: 16px 4px 16px 16px;
-    box-shadow: 0 2px 8px rgba(27, 107, 74, 0.2);
+    box-shadow: 0 2px 8px rgba(43, 125, 224, 0.2);
   }
 
   /* ===== TYPING INDICATOR ===== */
@@ -272,7 +272,7 @@
 
   .chat-input:focus {
     border-color: var(--ps-primary);
-    box-shadow: 0 0 0 3px rgba(27, 107, 74, 0.1);
+    box-shadow: 0 0 0 3px rgba(43, 125, 224, 0.1);
   }
 
   .chat-send-btn {
@@ -336,7 +336,7 @@
     border: none;
     cursor: pointer;
     font-size: 26px;
-    box-shadow: 0 4px 20px rgba(27,107,74,0.35);
+    box-shadow: 0 4px 20px rgba(43,125,224,0.35);
     z-index: 9999;
     transition: all 0.3s;
     animation: widget-bounce 2s ease-in-out 1s 1;
@@ -545,15 +545,17 @@ async function sendMessage() {
 
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
 
-    const data = await response.json();
-    const reply = data.reply || "Sorry, I'm having trouble connecting right now. Please call us at (630) 413-4002!";
+    let data = await response.json();
+    // n8n may return an array — unwrap it
+    if (Array.isArray(data)) data = data[0];
+    // Handle both possible field names from n8n
+    const reply = data.reply || data.chatReply || "Sorry, I'm having trouble connecting right now. Please call us at (630) 413-4002!";
 
     // Update local state from metadata
-    if (data.metadata) {
-      if (data.metadata.visitor_name) visitorName = data.metadata.visitor_name;
-      if (data.metadata.visitor_email) visitorEmail = data.metadata.visitor_email;
-      if (data.metadata.visitor_phone) visitorPhone = data.metadata.visitor_phone;
-    }
+    const meta = data.metadata || {};
+    if (meta.visitor_name) visitorName = meta.visitor_name;
+    if (meta.visitor_email) visitorEmail = meta.visitor_email;
+    if (meta.visitor_phone) visitorPhone = meta.visitor_phone;
 
     // Update conversation history
     conversationHistory += `\nPolish Sparkle: ${reply}`;
