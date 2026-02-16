@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Polish Sparkle ✨ Get a Free Quote</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ps-primary: #1B6B4A;
+    --ps-primary-light: #2A8F64;
+    --ps-primary-pale: #E8F5EE;
+    --ps-accent: #D4A853;
+    --ps-accent-light: #F5ECD4;
+    --ps-bg: #FAFBF9;
+    --ps-surface: #FFFFFF;
+    --ps-text: #1A2E23;
+    --ps-text-light: #5A6B60;
+    --ps-border: #D8E0DB;
+    --ps-sparkle: #D4A853;
+    --ps-radius: 16px;
+    --ps-shadow: 0 2px 12px rgba(27, 107, 74, 0.08);
+    --ps-shadow-lg: 0 8px 32px rgba(27, 107, 74, 0.12);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--ps-bg);
+    color: var(--ps-text);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+
+  /* ===== STANDALONE PAGE LAYOUT ===== */
+  .chat-standalone {
+    width: 100%;
+    max-width: 480px;
+    height: 90vh;
+    max-height: 740px;
+    display: flex;
+    flex-direction: column;
+    background: var(--ps-surface);
+    border-radius: var(--ps-radius);
+    box-shadow: var(--ps-shadow-lg);
+    overflow: hidden;
+    border: 1px solid var(--ps-border);
+  }
+
+  /* ===== HEADER ===== */
+  .chat-header {
+    background: linear-gradient(135deg, var(--ps-primary) 0%, var(--ps-primary-light) 100%);
+    padding: 20px 24px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .chat-header::after {
+    content: '✨';
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 28px;
+    opacity: 0.4;
+    animation: sparkle-float 3s ease-in-out infinite;
+  }
+
+  @keyframes sparkle-float {
+    0%, 100% { transform: translateY(-50%) rotate(0deg); }
+    50% { transform: translateY(-60%) rotate(10deg); }
+  }
+
+  .chat-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    background: rgba(255,255,255,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    backdrop-filter: blur(8px);
+    border: 1.5px solid rgba(255,255,255,0.25);
+    flex-shrink: 0;
+  }
+
+  .chat-header-text h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: 0.01em;
+  }
+
+  .chat-header-text p {
+    font-size: 12.5px;
+    color: rgba(255,255,255,0.8);
+    margin-top: 2px;
+    font-weight: 400;
+  }
+
+  .status-dot {
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    background: #6BDE8A;
+    border-radius: 50%;
+    margin-right: 5px;
+    animation: pulse-dot 2s infinite;
+  }
+
+  @keyframes pulse-dot {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+  }
+
+  /* ===== MESSAGES AREA ===== */
+  .chat-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    scroll-behavior: smooth;
+    background:
+      radial-gradient(ellipse at 20% 80%, rgba(27,107,74,0.03) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 20%, rgba(212,168,83,0.04) 0%, transparent 50%),
+      var(--ps-bg);
+  }
+
+  .chat-messages::-webkit-scrollbar { width: 5px; }
+  .chat-messages::-webkit-scrollbar-track { background: transparent; }
+  .chat-messages::-webkit-scrollbar-thumb { background: var(--ps-border); border-radius: 10px; }
+
+  .message {
+    display: flex;
+    gap: 10px;
+    max-width: 88%;
+    animation: message-in 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  @keyframes message-in {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .message.bot { align-self: flex-start; }
+  .message.user { align-self: flex-end; flex-direction: row-reverse; }
+
+  .message-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .message.bot .message-avatar {
+    background: var(--ps-primary-pale);
+  }
+
+  .message.user .message-avatar {
+    background: var(--ps-accent-light);
+  }
+
+  .message-bubble {
+    padding: 12px 16px;
+    font-size: 14px;
+    line-height: 1.55;
+    letter-spacing: 0.01em;
+  }
+
+  .message.bot .message-bubble {
+    background: var(--ps-surface);
+    border: 1px solid var(--ps-border);
+    border-radius: 4px 16px 16px 16px;
+    color: var(--ps-text);
+    box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+  }
+
+  .message.user .message-bubble {
+    background: var(--ps-primary);
+    color: #fff;
+    border-radius: 16px 4px 16px 16px;
+    box-shadow: 0 2px 8px rgba(27, 107, 74, 0.2);
+  }
+
+  /* ===== TYPING INDICATOR ===== */
+  .typing-indicator {
+    display: none;
+    align-self: flex-start;
+    gap: 10px;
+    max-width: 88%;
+    animation: message-in 0.3s ease;
+  }
+
+  .typing-indicator.visible { display: flex; }
+
+  .typing-dots {
+    padding: 14px 20px;
+    background: var(--ps-surface);
+    border: 1px solid var(--ps-border);
+    border-radius: 4px 16px 16px 16px;
+    display: flex;
+    gap: 5px;
+    align-items: center;
+  }
+
+  .typing-dots span {
+    width: 7px;
+    height: 7px;
+    background: var(--ps-primary);
+    border-radius: 50%;
+    opacity: 0.4;
+    animation: typing-bounce 1.4s infinite;
+  }
+
+  .typing-dots span:nth-child(2) { animation-delay: 0.15s; }
+  .typing-dots span:nth-child(3) { animation-delay: 0.3s; }
+
+  @keyframes typing-bounce {
+    0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
+    30% { transform: translateY(-6px); opacity: 1; }
+  }
+
+  /* ===== INPUT AREA ===== */
+  .chat-input-area {
+    padding: 16px 20px;
+    background: var(--ps-surface);
+    border-top: 1px solid var(--ps-border);
+    display: flex;
+    gap: 10px;
+    align-items: flex-end;
+  }
+
+  .chat-input-wrapper {
+    flex: 1;
+    position: relative;
+  }
+
+  .chat-input {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1.5px solid var(--ps-border);
+    border-radius: 12px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    color: var(--ps-text);
+    background: var(--ps-bg);
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    resize: none;
+    max-height: 100px;
+    line-height: 1.4;
+  }
+
+  .chat-input::placeholder { color: var(--ps-text-light); opacity: 0.6; }
+
+  .chat-input:focus {
+    border-color: var(--ps-primary);
+    box-shadow: 0 0 0 3px rgba(27, 107, 74, 0.1);
+  }
+
+  .chat-send-btn {
+    width: 44px;
+    height: 44px;
+    border: none;
+    border-radius: 12px;
+    background: var(--ps-primary);
+    color: #fff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    flex-shrink: 0;
+  }
+
+  .chat-send-btn:hover { background: var(--ps-primary-light); transform: scale(1.04); }
+  .chat-send-btn:active { transform: scale(0.96); }
+  .chat-send-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+  .chat-send-btn svg {
+    width: 20px;
+    height: 20px;
+    fill: currentColor;
+  }
+
+  /* ===== PROMO BANNER ===== */
+  .promo-banner {
+    background: linear-gradient(90deg, var(--ps-accent-light), #FFF8E8);
+    padding: 8px 16px;
+    text-align: center;
+    font-size: 12px;
+    color: var(--ps-text);
+    font-weight: 500;
+    border-bottom: 1px solid var(--ps-border);
+  }
+
+  .promo-banner span { color: var(--ps-accent); font-weight: 700; }
+
+  /* ===== POWERED BY ===== */
+  .powered-by {
+    text-align: center;
+    padding: 8px;
+    font-size: 11px;
+    color: var(--ps-text-light);
+    opacity: 0.5;
+  }
+
+  /* ===== WIDGET MODE (FLOATING BUBBLE) ===== */
+  .chat-widget-trigger {
+    display: none;
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--ps-primary), var(--ps-primary-light));
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    font-size: 26px;
+    box-shadow: 0 4px 20px rgba(27,107,74,0.35);
+    z-index: 9999;
+    transition: all 0.3s;
+    animation: widget-bounce 2s ease-in-out 1s 1;
+  }
+
+  .chat-widget-trigger:hover { transform: scale(1.1); }
+
+  @keyframes widget-bounce {
+    0%, 100% { transform: translateY(0); }
+    40% { transform: translateY(-10px); }
+    60% { transform: translateY(-4px); }
+  }
+
+  .chat-widget-container {
+    display: none;
+    position: fixed;
+    bottom: 96px;
+    right: 24px;
+    z-index: 9998;
+    animation: widget-open 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .chat-widget-container.open { display: block; }
+
+  @keyframes widget-open {
+    from { opacity: 0; transform: translateY(16px) scale(0.95); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  /* Widget mode overrides */
+  .widget-mode .chat-standalone {
+    height: 560px;
+    max-height: 70vh;
+    width: 380px;
+    box-shadow: 0 12px 48px rgba(0,0,0,0.15);
+  }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 520px) {
+    body { padding: 0; }
+    .chat-standalone {
+      max-width: 100%;
+      height: 100vh;
+      max-height: 100vh;
+      border-radius: 0;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div class="chat-standalone" id="chatApp">
+  <!-- Header -->
+  <div class="chat-header">
+    <div class="chat-avatar">🧹</div>
+    <div class="chat-header-text">
+      <h1>Polish Sparkle</h1>
+      <p><span class="status-dot"></span>Online — Get a free quote in minutes</p>
+    </div>
+  </div>
+
+  <!-- Promo -->
+  <div class="promo-banner">
+    🎉 <span>15% off</span> your first cleaning — mention this chat!
+  </div>
+
+  <!-- Messages -->
+  <div class="chat-messages" id="chatMessages">
+    <!-- Welcome message -->
+    <div class="message bot">
+      <div class="message-avatar">✨</div>
+      <div class="message-bubble">
+        Hi there! Welcome to Polish Sparkle 👋 I'm here to help you get a free quote for professional cleaning. What kind of cleaning are you looking for?
+      </div>
+    </div>
+  </div>
+
+  <!-- Typing indicator -->
+  <div class="typing-indicator" id="typingIndicator">
+    <div class="message-avatar" style="background: var(--ps-primary-pale);">✨</div>
+    <div class="typing-dots">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+
+  <!-- Input -->
+  <div class="chat-input-area">
+    <div class="chat-input-wrapper">
+      <textarea
+        class="chat-input"
+        id="chatInput"
+        placeholder="Type your message..."
+        rows="1"
+        maxlength="500"
+      ></textarea>
+    </div>
+    <button class="chat-send-btn" id="sendBtn" onclick="sendMessage()">
+      <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+    </button>
+  </div>
+
+  <div class="powered-by">Powered by Polish Sparkle AI</div>
+</div>
+
+<script>
+// ============================================================
+// CONFIGURATION — Update this URL after importing the workflow
+// ============================================================
+const WEBHOOK_URL = 'https://polishspark.app.n8n.cloud/webhook/polish-sparkle-chat';
+// For testing, use: https://polishspark.app.n8n.cloud/webhook-test/polish-sparkle-chat
+
+// ============================================================
+// STATE
+// ============================================================
+let sessionId = 'chat_' + Date.now() + '_' + Math.random().toString(36).substr(2, 6);
+let conversationHistory = '';
+let visitorName = '';
+let visitorEmail = '';
+let visitorPhone = '';
+let isWaiting = false;
+
+// ============================================================
+// DOM
+// ============================================================
+const messagesEl = document.getElementById('chatMessages');
+const inputEl = document.getElementById('chatInput');
+const sendBtn = document.getElementById('sendBtn');
+const typingEl = document.getElementById('typingIndicator');
+
+// Auto-resize textarea
+inputEl.addEventListener('input', function() {
+  this.style.height = 'auto';
+  this.style.height = Math.min(this.scrollHeight, 100) + 'px';
+});
+
+// Enter to send (Shift+Enter for newline)
+inputEl.addEventListener('keydown', function(e) {
+  if (e.key === 'Enter' && !e.shiftKey) {
+    e.preventDefault();
+    sendMessage();
+  }
+});
+
+// ============================================================
+// CORE FUNCTIONS
+// ============================================================
+function addMessage(text, type) {
+  const msgDiv = document.createElement('div');
+  msgDiv.className = `message ${type}`;
+
+  const avatar = document.createElement('div');
+  avatar.className = 'message-avatar';
+  avatar.textContent = type === 'bot' ? '✨' : '👤';
+  if (type === 'bot') avatar.style.background = 'var(--ps-primary-pale)';
+  else avatar.style.background = 'var(--ps-accent-light)';
+
+  const bubble = document.createElement('div');
+  bubble.className = 'message-bubble';
+  bubble.textContent = text;
+
+  msgDiv.appendChild(avatar);
+  msgDiv.appendChild(bubble);
+  messagesEl.appendChild(msgDiv);
+  messagesEl.scrollTop = messagesEl.scrollHeight;
+}
+
+function showTyping() {
+  typingEl.classList.add('visible');
+  messagesEl.scrollTop = messagesEl.scrollHeight;
+}
+
+function hideTyping() {
+  typingEl.classList.remove('visible');
+}
+
+async function sendMessage() {
+  const text = inputEl.value.trim();
+  if (!text || isWaiting) return;
+
+  // Add user message
+  addMessage(text, 'user');
+  inputEl.value = '';
+  inputEl.style.height = 'auto';
+
+  // Update conversation history
+  conversationHistory += `\nVisitor: ${text}`;
+
+  // Disable input while waiting
+  isWaiting = true;
+  sendBtn.disabled = true;
+  showTyping();
+
+  try {
+    const response = await fetch(WEBHOOK_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        message: text,
+        session_id: sessionId,
+        visitor_name: visitorName,
+        visitor_email: visitorEmail,
+        visitor_phone: visitorPhone,
+        conversation_history: conversationHistory
+      })
+    });
+
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+
+    const data = await response.json();
+    const reply = data.reply || "Sorry, I'm having trouble connecting right now. Please call us at (630) 413-4002!";
+
+    // Update local state from metadata
+    if (data.metadata) {
+      if (data.metadata.visitor_name) visitorName = data.metadata.visitor_name;
+      if (data.metadata.visitor_email) visitorEmail = data.metadata.visitor_email;
+      if (data.metadata.visitor_phone) visitorPhone = data.metadata.visitor_phone;
+    }
+
+    // Update conversation history
+    conversationHistory += `\nPolish Sparkle: ${reply}`;
+
+    hideTyping();
+    addMessage(reply, 'bot');
+
+  } catch (err) {
+    console.error('Chat error:', err);
+    hideTyping();
+    addMessage(
+      "Hmm, I'm having a little trouble right now. You can reach us directly at (630) 413-4002 or try again in a moment!",
+      'bot'
+    );
+  }
+
+  isWaiting = false;
+  sendBtn.disabled = false;
+  inputEl.focus();
+}
+
+// Focus input on load
+inputEl.focus();
+</script>
+</body>
+</html>
